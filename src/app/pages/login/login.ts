@@ -30,29 +30,31 @@ export class Login {
 
   onSubmit() {
 
-    if (this.loginForm.invalid) {
-      return;
-    }
-
-    const savedUser = localStorage.getItem('user');
-
-    if (!savedUser) {
-      alert('Пользователь не найден');
-      return;
-    }
-
-    const user = JSON.parse(savedUser);
-
-    const { email, password } = this.loginForm.value;
-
-    if (user.email === email && user.password === password) {
-
-      localStorage.setItem('isAuth', 'true');
-
-      this.router.navigate(['/tasks']);
-
-    } else {
-      alert('Неверный email или пароль');
-    }
+  if (this.loginForm.invalid) {
+    return;
   }
+
+  const users = JSON.parse(
+    localStorage.getItem('users') || '[]'
+  );
+
+  const { email, password } = this.loginForm.value;
+
+  const user = users.find(
+    (u: any) =>
+      u.email === email &&
+      u.password === password
+  );
+
+  if (user) {
+
+    localStorage.setItem('isAuth', 'true');
+    localStorage.setItem('currentUser', user.email);
+
+    this.router.navigate(['/tasks']);
+
+  } else {
+    alert('Неверный email или пароль');
+  }
+}
 }

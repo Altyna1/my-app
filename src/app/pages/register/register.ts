@@ -22,16 +22,33 @@ export class Register {
 
   onSubmit() {
 
-    if (this.registerForm.invalid) {
-      return;
-    }
-
-    localStorage.setItem(
-      'user',
-      JSON.stringify(this.registerForm.value)
-    );
-
-    alert('Регистрация успешна!');
-    this.registerForm.reset();
+  if (this.registerForm.invalid) {
+    return;
   }
+
+  const users = JSON.parse(
+    localStorage.getItem('users') || '[]'
+  );
+
+  const userExists = users.some(
+    (user: any) =>
+      user.email === this.registerForm.value.email
+  );
+
+  if (userExists) {
+    alert('Пользователь с таким email уже существует');
+    return;
+  }
+
+  users.push(this.registerForm.value);
+
+  localStorage.setItem(
+    'users',
+    JSON.stringify(users)
+  );
+
+  alert('Регистрация успешна!');
+
+  this.registerForm.reset();
+}
 }

@@ -99,8 +99,10 @@ constructor(
 
   logout(): void {
   localStorage.removeItem('isAuth');
+  localStorage.removeItem('currentUser');
+
   this.router.navigate(['/login']);
-  }
+}
 
   get filteredTasks(): Task[] {
 
