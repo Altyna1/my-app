@@ -1,35 +1,51 @@
+<div class="container mt-5" style="max-width: 500px;">
 
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="card p-4">
 
-  <div>
-    <label>Имя</label>
-    <input
-      type="text"
-      formControlName="name">
+    <h2 class="text-center mb-4">Регистрация</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <div class="mb-3">
+        <label class="form-label">Имя</label>
+
+        <input
+          type="text"
+          class="form-control"
+          formControlName="name">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+
+        <input
+          type="email"
+          class="form-control"
+          formControlName="email">
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Пароль</label>
+
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password">
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-success w-100">
+        Зарегистрироваться
+      </button>
+
+    </form>
+
+    <p class="text-center mt-3 mb-0">
+      Уже есть аккаунт?
+      <a routerLink="/login">Войти</a>
+    </p>
+
   </div>
 
-  <br>
-
-  <div>
-    <label>Email</label>
-    <input
-      type="email"
-      formControlName="email">
-  </div>
-
-  <br>
-
-  <div>
-    <label>Пароль</label>
-    <input
-      type="password"
-      formControlName="password">
-  </div>
-
-  <br>
-
-  <button type="submit">
-    Зарегистрироваться
-  </button>
-
-</form>
+</div>

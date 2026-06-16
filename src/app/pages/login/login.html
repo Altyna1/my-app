@@ -1,27 +1,42 @@
-<h2>Вход</h2>
+<div class="container mt-5" style="max-width: 500px;">
 
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="card p-4">
 
-  <div>
-    <label>Email</label>
-    <input type="email" formControlName="email">
+    <h2 class="text-center mb-4">Вход</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+
+        <input
+          type="email"
+          class="form-control"
+          formControlName="email">
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Пароль</label>
+
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password">
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary w-100">
+        Войти
+      </button>
+
+    </form>
+
+    <p class="text-center mt-3 mb-0">
+      Нет аккаунта?
+      <a routerLink="/register">Зарегистрироваться</a>
+    </p>
+
   </div>
 
-  <br>
-
-  <div>
-    <label>Пароль</label>
-    <input type="password" formControlName="password">
-  </div>
-
-  <br>
-
-  <button type="submit">
-    Войти
-  </button>
-
-</form>
-
-<br>
-
-<a href="/register">Нет аккаунта? Зарегистрироваться</a>
+</div>
