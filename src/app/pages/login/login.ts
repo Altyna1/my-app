@@ -54,6 +54,13 @@ export class Login {
     this.router.navigate(['/tasks']);
 
   } else {
+    // alert() — убери везде
+    // В login.ts и register.ts ты показываешь ошибки через alert(). Это браузерное всплывающее окно — так давно никто не делает. Заведи переменную errorMessage = '' в компоненте,
+    //   записывай в неё текст ошибки, и выводи в шаблоне:
+    //
+    // @if (errorMessage) {
+    //   <div class="alert alert-danger">{{ errorMessage }}</div>
+    // }
     alert('Неверный email или пароль');
   }
 }
