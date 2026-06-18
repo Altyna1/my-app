@@ -21,17 +21,27 @@
         <input
           type="text"
           class="form-control"
-          formControlName="title">
+          formControlName="title"
+          [class.is-invalid]="taskForm.get('title')?.invalid && taskForm.get('title')?.touched">
+
+        <div class="invalid-feedback">
+          Введите заголовок задачи
+        </div>
       </div>
 
-      <div class="mb-3">
+     <div class="mb-3">
         <label class="form-label">Описание</label>
 
         <textarea
-          rows="4"
           class="form-control"
-          formControlName="description">
+          rows="5"
+          formControlName="description"
+          [class.is-invalid]="taskForm.get('description')?.invalid && taskForm.get('description')?.touched">
         </textarea>
+
+        <div class="invalid-feedback">
+          Введите описание задачи
+        </div>
       </div>
 
       <button

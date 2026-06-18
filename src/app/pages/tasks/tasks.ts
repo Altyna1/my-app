@@ -53,6 +53,7 @@ constructor(
   saveTask(): void {
 
     if (this.taskForm.invalid) {
+      this.taskForm.markAllAsTouched();
       return;
     }
 

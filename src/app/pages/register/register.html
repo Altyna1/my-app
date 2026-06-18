@@ -1,8 +1,15 @@
+
 <div class="container mt-5" style="max-width: 500px;">
 
   <div class="card p-4">
 
     <h2 class="text-center mb-4">Регистрация</h2>
+
+    @if (errorMessage) {
+      <div class="alert alert-danger mb-3">
+        {{ errorMessage }}
+      </div>
+    }
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
@@ -12,7 +19,12 @@
         <input
           type="text"
           class="form-control"
-          formControlName="name">
+          formControlName="name"
+          [class.is-invalid]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+
+        <div class="invalid-feedback">
+          Введите имя
+        </div>
       </div>
 
       <div class="mb-3">
@@ -21,7 +33,12 @@
         <input
           type="email"
           class="form-control"
-          formControlName="email">
+          formControlName="email"
+          [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+
+        <div class="invalid-feedback">
+          Введите корректный email
+        </div>
       </div>
 
       <div class="mb-4">
@@ -30,7 +47,12 @@
         <input
           type="password"
           class="form-control"
-          formControlName="password">
+          formControlName="password"
+          [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+
+        <div class="invalid-feedback">
+          Введите пароль
+        </div>
       </div>
 
       <button
@@ -49,15 +71,3 @@
   </div>
 
 </div>
-
-<!--Нет визуальной валидации полей-->
-
-<!--Пользователь отправляет пустую форму — ничего не происходит, никаких подсказок. Нужно показывать ошибки под полями. Для этого:-->
-
-<!--На инпут добавь:-->
-<!--[class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched"-->
-
-<!--Под инпутом добавь:-->
-<!--<div class="invalid-feedback">Введите email</div>-->
-
-<!--И в методе onSubmit() вызывай this.form.markAllAsTouched() когда форма невалидна — это заставит Angular показать ошибки сразу по всем полям.-->

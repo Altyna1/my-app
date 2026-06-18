@@ -1,6 +1,13 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +19,14 @@ export class Register {
 
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  errorMessage = '';
+
+  constructor(
+  private fb: FormBuilder,
+  private router: Router,
+  private authService: AuthService
+  ){
+
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -22,59 +36,22 @@ export class Register {
 
   onSubmit() {
 
-  if (this.registerForm.invalid) {
-    return;
+    this.errorMessage = '';
+
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
+    }
+
+    const error = this.authService.register(
+      this.registerForm.value
+    );
+
+    if (error) {
+      this.errorMessage = error;
+      return;
+    }
+
+    this.router.navigate(['/login']);
   }
-
-  const users = JSON.parse(
-    localStorage.getItem('users') || '[]'
-  );
-
-  const userExists = users.some(
-    (user: any) =>
-      user.email === this.registerForm.value.email
-  );
-
-  if (userExists) {
-    // alert() — убери везде
-    // В login.ts и register.ts ты показываешь ошибки через alert(). Это браузерное всплывающее окно — так давно никто не делает. Заведи переменную errorMessage = '' в компоненте,
-    //   записывай в неё текст ошибки, и выводи в шаблоне:
-    //
-    // @if (errorMessage) {
-    //   <div class="alert alert-danger">{{ errorMessage }}</div>
-    // }
-    alert('Пользователь с таким email уже существует');
-    return;
-  }
-
-  users.push(this.registerForm.value);
-
-  localStorage.setItem(
-    'users',
-    JSON.stringify(users)
-  );
-    // alert() — убери везде
-    // В login.ts и register.ts ты показываешь ошибки через alert(). Это браузерное всплывающее окно — так давно никто не делает. Заведи переменную errorMessage = '' в компоненте,
-    //   записывай в неё текст ошибки, и выводи в шаблоне:
-    //
-    // @if (errorMessage) {
-    //   <div class="alert alert-danger">{{ errorMessage }}</div>
-    // }
-  alert('Регистрация успешна!');
-
-  this.registerForm.reset();
 }
-}
-
-// pages/register/register.ts — после регистрации ничего не происходит
-//
-// После успешной регистрации у тебя:
-//
-//   alert('Регистрация успешна!');
-// this.registerForm.reset();
-//
-// Пользователь видит алерт, жмёт ОК — и остаётся на той же странице. Он не знает, что делать дальше. Нужно сделать редирект на страницу входа:
-//
-//   this.router.navigate(['/login']);
-//
-// Не забудь внедрить Router через конструктор.

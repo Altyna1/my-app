@@ -4,6 +4,12 @@
 
     <h2 class="text-center mb-4">Вход</h2>
 
+    @if (errorMessage) {
+      <div class="alert alert-danger mb-3">
+        {{ errorMessage }}
+      </div>
+    }
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
       <div class="mb-3">
@@ -12,7 +18,12 @@
         <input
           type="email"
           class="form-control"
-          formControlName="email">
+          formControlName="email"
+          [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+
+        <div class="invalid-feedback">
+          Введите корректный email
+        </div>
       </div>
 
       <div class="mb-4">
@@ -21,7 +32,12 @@
         <input
           type="password"
           class="form-control"
-          formControlName="password">
+          formControlName="password"
+          [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+
+        <div class="invalid-feedback">
+          Введите пароль
+        </div>
       </div>
 
       <button
@@ -40,15 +56,3 @@
   </div>
 
 </div>
-
-<!--Нет визуальной валидации полей-->
-
-<!--Пользователь отправляет пустую форму — ничего не происходит, никаких подсказок. Нужно показывать ошибки под полями. Для этого:-->
-
-<!--На инпут добавь:-->
-<!--[class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched"-->
-
-<!--Под инпутом добавь:-->
-<!--<div class="invalid-feedback">Введите email</div>-->
-
-<!--И в методе onSubmit() вызывай this.form.markAllAsTouched() когда форма невалидна — это заставит Angular показать ошибки сразу по всем полям.-->
